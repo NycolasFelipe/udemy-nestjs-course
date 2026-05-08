@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -27,7 +28,7 @@ export class RecadosController {
 
   /** Retorna um recado pelo ID */
   @Get(':id')
-  findById(@Param('id') id: string) {
+  findById(@Param('id', ParseIntPipe) id: number) {
     return this.recadosService.findById(id);
   }
 
@@ -39,13 +40,16 @@ export class RecadosController {
 
   /** Atualiza um recado pelo ID */
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDto: UpdateRecadoDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateRecadoDto,
+  ) {
     return this.recadosService.update(id, updateDto);
   }
 
   /** Remove um recado pelo ID */
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.recadosService.remove(id);
   }
 }
